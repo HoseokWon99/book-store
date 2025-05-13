@@ -65,16 +65,6 @@ const upload = multer({
 
 
 
-const updateBookHandler = async (req, res) => {
-    const body = req.body;
-
-
-
-
-};
-
-
-
 
 
 
