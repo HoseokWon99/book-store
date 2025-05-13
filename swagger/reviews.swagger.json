@@ -1,0 +1,167 @@
+{
+  "paths": {
+    "/api/reviews": {
+      "get": {
+        "description": "리뷰 조회",
+
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userId",
+            "schema": { "type": "integer" }
+          }, {
+            "in": "query",
+            "name": "bookId",
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "userId": { "type": "integer" },
+                    "bookId": { "type": "integer" },
+                    "content": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date" }
+                  }
+                }
+              }
+            }
+          },
+          "500": { "description": "서버 에러" }
+        }
+      }
+    },
+    "/api/reviews/{bookId}": {
+      "post": {
+        "description": "리뷰 생성",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bookId",
+            "schema": { "type": "integer" },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": { "type": "string" },
+            "required": true,
+            "description": "Bear Token"
+
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "content": { "type": "string", "description": "리뷰 내용" } },
+                "required": ["content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "type": "object",
+            "description": "성공시 생성된 리뷰 반환",
+            "properties": {
+              "id": { "type": "integer" },
+              "userId": { "type": "integer" },
+              "bookId": { "type": "integer" },
+              "content": { "type": "string" },
+              "createdAt": { "type": "string",  "format": "date" }
+            }
+          },
+          "403": { "description": "로그인 필요" },
+          "404": { "description": "존재하지 않는 도서" },
+          "500": { "description": "서버 에러" }
+        }
+      }
+    },
+    "/api/reviews/{reviewId}": {
+      "patch": {
+        "description": "리뷰 수정",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reviewId",
+            "schema": { "type": "integer" },
+            "required": true,
+            "description": "수정할 리뷰 id"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": { "type": "string" },
+            "required": true,
+            "description": "Bear Token"
+
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "content": { "type": "string", "description": "리뷰 내용" } },
+                "required": ["content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "type": "object",
+            "description": "성공시 수정된 리뷰 반환",
+            "properties": {
+              "id": { "type": "integer" },
+              "userId": { "type": "integer" },
+              "bookId": { "type": "integer" },
+              "content": { "type": "string" },
+              "createdAt": { "type": "string",  "format": "date" }
+            }
+          },
+          "403": { "description": "로그인 필요" },
+          "404": { "description": "존재하지 않는 리뷰" },
+          "500": { "description": "서버 에러" }
+        }
+      },
+      "delete": {
+        "description": "리뷰 삭제",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reviewId",
+            "schema": { "type": "integer" },
+            "required": true,
+            "description": "수정할 리뷰 id"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": { "type": "string" },
+            "required": true,
+            "description": "Bear Token"
+
+          }
+        ],
+        "responses": {
+          "202": { "description": "성공" },
+          "403": { "description": "권한 없음" },
+          "404": { "description": "존재하지 않는 리뷰" },
+          "500": { "description": "서버 에러" }
+
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "paths": {
+    "/api/books/likes/{bookId}": {
+      "description": "유저의 책에 대한 좋아요 상태를 반전시키고, 이를 책의 좋아요 수에 반영한다 (좋아요 on -> 좋아요 off & 좋아요 off -> 좋아요 on)",
+      "patch": {
+        "parameters": [{
+          "in": "path",
+          "name": "bookId",
+          "schema": { "type": "integer" },
+          "required": true
+        }, {
+          "in": "header",
+          "name": "Authorization",
+          "schema": { "type": "string", "example": "Bearer {ACCESS_TOKEN}" },
+          "required": true,
+          "description": "인증 헤더"
+        }],
+        "responses": {
+          "205": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "likes": { "type": "integer", "description": "변화가 반영된 책의 좋아요 수 반환" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "로그인 필요" },
+          "500": { "description": "서버 에러" }
+        }
+      }
+    }
+  }
+}

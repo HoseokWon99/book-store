@@ -1,0 +1,226 @@
+/**
+ * @swagger
+ * paths:
+ *   /api/books:
+ *     post:
+ *       description: 도서 추가
+ *       parameters:
+ *         - in: header
+ *           name: Authorization
+ *           schema:
+ *             type: string
+ *           description: Bearer {ACCESS_TOKEN} 형식
+ *       requestBody:
+ *         content:
+ *           multipart/form-data:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 isbn:
+ *                   type: string
+ *                   pattern: "^97[89]\\d{10}$"
+ *                 title:
+ *                   type: string
+ *                 author:
+ *                   type: string
+ *                 pubOn:
+ *                   type: string
+ *                   format: date
+ *                   description: 출간일
+ *                 price:
+ *                   type: number
+ *                 category:
+ *                   type: string
+ *                 pages:
+ *                   type: integer
+ *                   description: 총 페이지 수
+ *                 contents:
+ *                   type: string
+ *                   description: 목차
+ *                 abstract:
+ *                   type: string
+ *                   description: 요약 설명
+ *                 detail:
+ *                   type: string
+ *                   description: 상세 설명
+ *                 imageFiles:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                     format: byte
+ *                   description: 제일 앞에 있는 이미지가 커버 이미지가 된다.
+ *               required:
+ *                 - isbn
+ *                 - title
+ *                 - author
+ *                 - pubOn
+ *                 - price
+ *                 - category
+ *       responses:
+ *         "201":
+ *           description: 도서 추가 성공
+ *         "401":
+ *           description: 인증 실패
+ *         "403":
+ *           description: 권한 없음
+ *         "409":
+ *           description: 이미 존재하는 isbn
+ *         "422":
+ *           description: 요청 body의 형식이 유효하지 않음
+ *         "500":
+ *           description: 서버 에러
+ *   /api/books/{bookId}:
+ *     get:
+ *       parameters:
+ *         - in: path
+ *           name: bookId
+ *           schema:
+ *             type: integer
+ *           required: true
+ *         - in: header
+ *           name: Authorization
+ *           schema:
+ *             type: string
+ *           description: Bearer {ACCESS_TOKEN} 형식
+ *       responses:
+ *         "200":
+ *           description: OK
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   isbn:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   author:
+ *                     type: string
+ *                   price:
+ *                     type: number
+ *                   pubOn:
+ *                     type: string
+ *                     format: date
+ *                     description: 출간일
+ *                   category:
+ *                     type: string
+ *                   pages:
+ *                     type: integer
+ *                     description: 총 페이지 수
+ *                   contents:
+ *                     type: string
+ *                     description: 목차
+ *                   abstract:
+ *                     type: string
+ *                     description: 요약 설명
+ *                   detail:
+ *                     type: string
+ *                     description: 상세 설명
+ *                   likes:
+ *                     type: integer
+ *                     description: 좋아요 수
+ *                   images:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                     description: 이미지 경로의 배열, 맨 앞에 있는 값이 대표 이미지 경로임
+ *                   likeIt:
+ *                     type: boolean
+ *                     description: 유저가 좋아요 눌렀는지 여부 / Authorization을 헤더에 포함시켜야 받을 수 있음
+ *     delete:
+ *       description: 도서 제거
+ *       parameters:
+ *         - in: path
+ *           name: bookId
+ *           schema:
+ *             type: integer
+ *           required: true
+ *         - in: header
+ *           name: Authorization
+ *           schema:
+ *             type: string
+ *           required: true
+ *           description: Bearer {ACCESS_TOKEN} 형식
+ *       responses:
+ *         "202":
+ *           description: 삭제 성공
+ *         "401":
+ *           description: 인증 실패
+ *         "403":
+ *           description: 권한 없음
+ *         "500":
+ *           description: 서버 에러
+ *   /api/books/search:
+ *     get:
+ *       parameters:
+ *         - in: query
+ *           name: keyword
+ *           schema:
+ *             type: string
+ *         - in: query
+ *           name: category
+ *           schema:
+ *             type: string
+ *         - in: query
+ *           name: page
+ *           schema:
+ *             type: integer
+ *         - in: query
+ *           name: limit
+ *           schema:
+ *             type: integer
+ *         - in: query
+ *           name: new
+ *           schema:
+ *             type: boolean
+ *             description: true 설정시 신간만 조회
+ *         - in: query
+ *           name: best
+ *           schema:
+ *             type: boolean
+ *             description: true 설정시 인기 상품만 조회
+ *         - in: query
+ *           name: sort
+ *           schema:
+ *             type: string
+ *             pattern: "^((pubOn|likes),(asc|ASC|dsc|DSC))$"
+ *             description: "{정렬 기준 필드},{오름차순/내림차순}"
+ *             example: pubOn,ACC
+ *       responses:
+ *         "200":
+ *           description: OK
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   size:
+ *                     type: integer
+ *                     description: 검색 결과 수
+ *                   results:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         title:
+ *                           type: string
+ *                         author:
+ *                           type: string
+ *                         price:
+ *                           type: number
+ *                         abstract:
+ *                           type: string
+ *                           description: 요약 설명
+ *                         likes:
+ *                           type: integer
+ *                           description: 좋아요 수
+ *                         cover:
+ *                           type: string
+ *                           description: 대표 이미지 경로
+ *         "500":
+ *           description: 서버 에러
+ */

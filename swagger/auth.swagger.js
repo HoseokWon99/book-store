@@ -1,0 +1,71 @@
+/**
+ * @swagger
+ * paths:
+ *   /api/auth/sign-in:
+ *     post:
+ *       description: 성공시 access token 반환
+ *       requestBody:
+ *         require: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 email:
+ *                   type: string
+ *                   format: email
+ *                 password:
+ *                   type: string
+ *                   format: password
+ *               required:
+ *                 - email
+ *                 - password
+ *       responses:
+ *         "201":
+ *           description: 성공
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   accessToken:
+ *                     type: string
+ *         "401":
+ *           description: 이메일이나 비밀번호가 틀림
+ *         "500":
+ *           description: 서버 에러
+ *
+ *   /api/auth/sign-out:
+ *     get:
+ *       parameters:
+ *         - in: header
+ *           name: Authorization
+ *           schema:
+ *             type: string
+ *             example: Bearer {ACCESS_TOKEN}
+ *           required: true
+ *           description: 인증 헤더
+ *       responses:
+ *         "200":
+ *           description: 성공
+ *         "500":
+ *           description: 서버 에러
+ *
+ *   /api/auth/renew:
+ *     get:
+ *       description: access token 재발급
+ *       responses:
+ *         "200":
+ *           description: 성공
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   accessToken:
+ *                     type: string
+ *         "403":
+ *           description: refresh token 만료되어 로그인 필요
+ *         "500":
+ *           description: 서버 에러
+ */

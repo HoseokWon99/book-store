@@ -1,0 +1,14 @@
+{
+  "definition": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Book Store Api Docs",
+      "version": "1.0.0",
+      "description": "Book Store Api For Devcos"
+    },
+    "servers": [
+      { "url": "http://localhost:3001", "description":  "Local Dev"}
+    ]
+  },
+  "apis": ["../swagger/*.swagger.js"]
+}
