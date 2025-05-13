@@ -45,10 +45,7 @@ async function updateBookLike(dto) {
     const doc = await BookLike.findOne({ bookId }).exec();
     if (!doc) throw httpError(404);
 
-    const session = await BookLike.startSession();
-
     try {
-        session.startTransaction();
         const key = userId.toString();
 
         if (doc.users.get(key)) {
@@ -60,14 +57,10 @@ async function updateBookLike(dto) {
             doc.count += 1;
         }
 
-        await doc.save({ session });
-        await session.commitTransaction();
-        await session.endSession();
+        await doc.save();
         return doc.count;
     }
     catch (error) {
-        await session.abortTransaction();
-        await session.endSession();
         throw error;
     }
 

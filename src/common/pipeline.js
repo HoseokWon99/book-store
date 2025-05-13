@@ -5,7 +5,6 @@
  * @param {...import("./typedef").Handler} handlers
  * @returns {import("./typedef").Pipeline}
  */
-
 function pipeline(...handlers) {
     return handlers.map(
         handler => (async function(req, res, next) {

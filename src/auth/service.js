@@ -42,7 +42,7 @@ async function signIn(dto) {
  */
 async function signOut(token) {
    await blacklist.set(
-       token,
+       `bearer ${token}`,
        1,
        "EX",
        Number(process.env.JWT_ACCESS_TOKEN_DURATION)

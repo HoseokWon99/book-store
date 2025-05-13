@@ -71,6 +71,7 @@ async function createBooks(data) {
                 = await Book.findOrCreate({ where: { isbn }, defaults: rest });
 
             if (!created) throw httpError(408);
+            await booksLikesService.createBookLike(id);
         })
     );
 

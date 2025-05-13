@@ -1,4 +1,4 @@
-const jwtHandler = require("./jwt");
+const jwtHandler = require("./passport");
 const RoleHandler = require("./role");
 
 /**
@@ -6,4 +6,7 @@ const RoleHandler = require("./role");
  * @param {Array<"NONE" | "USER" | "ADMIN">} roles
  * @returns {import("../../common/typedef").Handler[]}
  */
-module.exports = roles => [jwtHandler, RoleHandler(roles)];
+module.exports = roles => [
+    jwtHandler,
+    RoleHandler(roles)
+];

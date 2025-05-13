@@ -8,7 +8,6 @@ module.exports = Joi.object().keys({
        pubOn: Joi.date().required(),
        price: Joi.number().required(),
        abstract: Joi.string().optional(),
-       detail: Joi.string().optional(),
        categoryId: Joi.number().min(1).max(12).required()
    }))
 });

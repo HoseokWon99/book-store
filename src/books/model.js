@@ -23,7 +23,7 @@ Book.init({
     underscored: true
 });
 
-//Category.hasMany(Book);
-//Book.belongsTo(Category, { foreignKey: "categoryId" });
+Category.hasMany(Book);
+Book.belongsTo(Category, { foreignKey: "categoryId" });
 
 module.exports = { Book };
