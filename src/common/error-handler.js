@@ -1,5 +1,3 @@
-const { HttpError } = require("http-errors");
-
 /**
  * @type {import("./typedef").ErrorHandler}
  */

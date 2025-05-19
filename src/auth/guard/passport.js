@@ -1,6 +1,7 @@
 const passport = require("passport");
 const { ExtractJwt, Strategy: JwtStrategy } = require("passport-jwt");
 const usersService = require("../../users/service");
+const blacklist = require("../../config/redis");
 
 const __options = {
     secretOrKey: process.env.JWT_SECRET,
@@ -23,8 +24,13 @@ passport.use(new JwtStrategy(__options, __verify));
 const __authenticate
     = passport.authenticate("jwt", { session: false });
 
+/**@type {import("../../common/typedef").Handler} */
 module.exports = async (req, res, next) => {
-    req.headers.authorization
-        ? await __authenticate(req, res, next)
-        : next();
+    const authorization = req.headers.authorization;
+    if (!authorization) return next();
+
+    if (await blacklist.get(authorization))
+        return res.sendStatus(403);
+
+    __authenticate(req, res, next);
 };

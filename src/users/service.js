@@ -1,8 +1,8 @@
 //@ts-check
-
 const { User } = require("./model");
 const { createHash } = require("crypto");
 const httpError = require("http-errors");
+const eventEmitter = require("../config/event-emitter");
 
 /**
  * @typedef {{
@@ -32,12 +32,13 @@ const httpError = require("http-errors");
 async function createUser(dto) {
     const { email, password } = __encryptUser(dto);
 
-        const [{ dataValues: { id } }, created] = await User.findOrCreate({
-        where: { email }, defaults: { password }
-    });
+    const [{ dataValues: user }, created]
+        = await User.findOrCreate({
+            where: { email }, defaults: { password }
+        });
 
     if (!created) throw httpError(408);
-
+    eventEmitter.emit("user.created", user);
 }
 
 /**

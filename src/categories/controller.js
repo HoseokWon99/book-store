@@ -1,4 +1,4 @@
-const { pipeline, validationHandler, params } = require("../../common");
+const { pipeline, validationHandler, params } = require("../common");
 const { getCategoryValue } = require("./service");
 const GetCategorySchema = require("./schema/get-category");
 

@@ -1,24 +1,25 @@
 const { signOut } = require("../service");
 const { pipeline } = require("../../common");
 
-const signOutHandler = async (req, res, next) => {
+const extractTokenHandler = async (req, res, next) => {
+    const authorization = req.headers.authorization;
 
-    try {
-        const authorization = req.headers.authorization;
-        console.debug(authorization);
+    if (!authorization) return res.sendStatus(200);
+    if (typeof authorization !== "string") return res.sendStatus(200);
+    if (!authorization.startsWith("bearer ")) return res.sendStatus(200);
 
-        if (authorization && typeof authorization === 'string') {
-            const token = authorization.split(' ')[1];
-            console.debug(token);
-            token && await signOut(token);
-            res.clearCookie("REFRESH_TOKEN", {httpOnly: true});
-        }
-
-        res.sendStatus(200);
-    }
-    catch (error) {
-        next(error);
-    }
+    req.token = authorization.replace("bearer ", '');
+    next();
 }
 
-module.exports = pipeline(signOutHandler);
+const signOutHandler = async (req, res) => {
+    const token = req.token;
+    await signOut(token);
+    res.clearCookie("REFRESH_TOKEN", { httpOnly: true });
+    res.sendStatus(200);
+}
+
+module.exports = pipeline(
+    extractTokenHandler,
+    signOutHandler
+);
