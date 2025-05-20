@@ -20,8 +20,9 @@ app.use(passport.initialize());
 app.use("/api-docs", ...require("./config/swagger"));
 app.use("/api/users", require("./users"));
 app.use("/api/auth", require("./auth"));
+app.use("/api/categories", require("./categories"));
 app.use("/api/books", require("./books"));
-app.use("/api/books/categories", require("./categories"));
+
 
 require("./config/sequelize").sync()
     .then(() => console.log("Sequelize initialized successfully."))
