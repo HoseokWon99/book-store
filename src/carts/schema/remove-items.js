@@ -1,5 +1,5 @@
 const Joi = require('joi');
 
 module.exports = Joi.object().keys({
-    cartId: Joi.number().required()
+    itemIds: Joi.array().items(Joi.number().required()).required()
 });

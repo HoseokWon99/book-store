@@ -1,3 +1,3 @@
-const { format } = require("date-fns");
-
-console.log("srt" instanceof  Array);
+const obj = {  };
+const { userId, ...rest } = obj;
+console.log(userId, rest);

@@ -114,6 +114,7 @@ function __makeWhereOptions(dto) {
     if (dto.categories) where.categoryId = { [Op.in]: dto.categories };
     if (dto.pubOn) where.pubOn = { [Op.between]: dto.pubOn };
     if (dto.price) where.price = { [Op.between]: dto.price };
+    console.log(dto.categories);
 
     return where;
 }

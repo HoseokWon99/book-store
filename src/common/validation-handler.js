@@ -1,9 +1,8 @@
 
 
 /**
- * @typedef {Object} Validator
- * @property {string} target
- * @property {import("joi").ObjectSchema<*>} schema
+ * @typedef {import("joi").ObjectSchema<*>} Schema
+ * @typedef {{ target: string; schema: Schema }} Validator
  */
 
 /**
@@ -29,8 +28,8 @@ function validationHandler(validators) {
 
 /**
  *
- * @param { import("joi").ObjectSchema<*> }schema
- * @returns {import("./typedef").Validator}
+ * @param { Schema }schema
+ * @returns {Validator}
  */
 function query(schema) {
     return { target: "query", schema: schema };
@@ -38,8 +37,8 @@ function query(schema) {
 
 /**
  *
- * @param { import("joi").ObjectSchema<*> }schema
- * @returns {import("./typedef").Validator}
+ * @param { Schema }schema
+ * @returns {Validator}
  */
 function params(schema) {
     return { target: "params", schema: schema };
@@ -47,8 +46,8 @@ function params(schema) {
 
 /**
  *
- * @param { import("joi").ObjectSchema<*> }schema
- * @returns {import("./typedef").Validator}
+ * @param { Schema }schema
+ * @returns {Validator}
  */
 function body(schema) {
     return { target: "body", schema: schema };

@@ -1,2 +1,7 @@
 const { Order } = require("./order");
-module.exports = { Order };
+const { OrderedBook } = require("./ordered.book");
+
+Order.hasMany(OrderedBook, { as: "orderedBooks" });
+OrderedBook.belongsTo(Order, { foreignKey: "orderId" });
+
+module.exports ={ Order, OrderedBook };

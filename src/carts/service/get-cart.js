@@ -1,9 +1,9 @@
-const { Cart } = require('../model');
+const { Cart } = require('../model/cart');
 
 /**
  * @typedef {{
  *     id: number;
- *     nProducts: number;
+ *     nItems: number;
  * }} CartDTO
  */
 
@@ -13,8 +13,8 @@ const { Cart } = require('../model');
  * @returns {Promise<CartDTO>}
  */
 async function getCart(userId) {
-    const { id, nProducts } = await Cart.findByUserId(userId);
-    return { id, nProducts };
+    const { id, nItems } = await Cart.findByUserId(userId);
+    return { id, nItems };
 }
 
 module.exports = getCart;

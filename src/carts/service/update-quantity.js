@@ -1,11 +1,10 @@
-const { Product } = require("../../products/model");
+const { Cart, CartItem } = require("../model");
 const httpError = require("http-errors");
-const {Cart} = require("../model");
 
 /**
  *@typedef {{
  *     userId: number;
- *     productId: number;
+ *     itemId: number;
  *     quantity: number;
  *}} UpdateQuantityDTO
  *
@@ -18,17 +17,24 @@ const {Cart} = require("../model");
  * @returns {Promise<UpdateQuantityResult>}
  */
 async function updateQuantity(dto) {
-    const { userId, productId, quantity } = dto;
-    const cart = await Cart.findByUserId(userId);
+    const { userId, itemId, quantity } = dto;
 
-    const product = await Product.findOne({
-        where: { id: productId, cartId: cart.id }
+    const { cartItems: items } = await Cart.findByUserId(userId, {
+        include: [{
+            model: CartItem,
+            as: "cartItems",
+            where: { id: itemId },
+            limit: 1
+        }]
     });
 
-    if (!product) throw httpError(404);
+    if (!items.length) throw httpError(404);
 
-    await product.update({ quantity });
-    return { productId: product.id, quantity: product.quantity };
+    /** @type{CartItem} */
+    const item = items[0];
+    await item.update({ quantity });
+
+    return  { itemId, quantity };
 }
 
 module.exports = updateQuantity;

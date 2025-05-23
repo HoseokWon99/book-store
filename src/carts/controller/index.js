@@ -1,5 +1,5 @@
-exports.addProducts = require("./add-products");
+exports.addItems = require("./add-items");
 exports.getCart = require("./get-cart");
-exports.getProducts = require("./get-products");
-exports.removeProducts = require("./remove-products");
+exports.getItems = require("./get-items");
+exports.removeItems = require("./remove-items");
 exports.updateQuantity = require("./update-quantity");

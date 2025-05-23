@@ -1,14 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 /**
- * @typedef {{
- *     accessToken: string;
- *     refreshToken: string;
- * }} TokenPair
- */
-
-
-/**
  *
  * @param {string} email
  * @param {number} ex toke expiration, the unit is second.
