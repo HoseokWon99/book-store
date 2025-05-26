@@ -1,6 +1,5 @@
 const { createOrder } = require("../service");
 const { pipeline, validationHandler, body } = require("../../common");
-const AuthGuard = require('../../auth/guard');
 const schema = require("../schema/create-order");
 const StatusCodes = require("http-status-codes");
 
@@ -16,7 +15,6 @@ const createOrderHandler = async (req, res) => {
 };
 
 module.exports = pipeline(
-    ...AuthGuard(["USER", "ADMIN"]),
     validationHandler([body(schema)]),
     createOrderHandler
 );

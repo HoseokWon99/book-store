@@ -9,6 +9,6 @@ router.route("/:reviewId")
     .patch(...controller.updateReview)
     .delete(...controller.deleteReview);
 
-router.get(":/bookId", ...controller.getReviews);
+router.get("/books/:bookId", ...controller.getReviews);
 
 module.exports = router;

@@ -1,3 +1,1 @@
-const obj = {  };
-const { userId, ...rest } = obj;
-console.log(userId, rest);
+console.log(Number(null))

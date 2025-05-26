@@ -9,4 +9,8 @@ const sequelize = new Sequelize({
     database: process.env.DB_DATABASE
 });
 
+sequelize.sync()
+    .then(() => console.log("Sequelize initialized successfully."))
+    .catch(console.error);
+
 module.exports = sequelize;

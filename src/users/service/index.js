@@ -1,5 +1,3 @@
 exports.createUser = require("./create-user");
 exports.getUserBy = require("./get-user-by");
 exports.updateUserBy = require("./update-user-by");
-exports.updatePassword = require("./update-password");
-exports.forgetPassword = require("./forget-password");

@@ -1,5 +1,4 @@
 const { getBookBy } = require("../service");
-const authGuard = require("../../auth/guard");
 const schema = require("../schema/get-book")
 const { validationHandler, params, pipeline } = require("../../common");
 
@@ -11,7 +10,6 @@ const getBookHandler = async (req, res) => {
 };
 
 module.exports = pipeline(
-    ...authGuard(["NONE", "USER", "ADMIN"]),
     validationHandler([params(schema)]),
     getBookHandler
 );

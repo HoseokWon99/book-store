@@ -1,5 +1,5 @@
 const { pipeline, validationHandler, body } = require("../common");
-const SignUpSchema  = require("./schema/sign-up");
+const schema  = require("./schema/sign-up");
 const usersService = require("./service");
 
 
@@ -9,6 +9,6 @@ const signUpHandler = async (req, res) => {
 }
 
 exports.signUp = pipeline(
-    validationHandler([body(SignUpSchema)]),
+    validationHandler([body(schema)]),
     signUpHandler
 );

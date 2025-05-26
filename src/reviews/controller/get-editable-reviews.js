@@ -1,6 +1,5 @@
 const { getReviewsBy } = require("../service");
 const { pipeline } = require("../../common");
-const AuthGuard = require('../../auth/guard');
 const StatusCodes = require("http-status-codes");
 
 const getEditableReviewsHandler = async (req, res) => {
@@ -9,7 +8,4 @@ const getEditableReviewsHandler = async (req, res) => {
     res.status(StatusCodes.OK).send({ results });
 };
 
-module.exports = pipeline(
-    ...AuthGuard(["USER", "ADMIN"]),
-    getEditableReviewsHandler
-);
+module.exports = pipeline(getEditableReviewsHandler);

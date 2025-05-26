@@ -1,30 +1,23 @@
 const { signIn } = require("../service");
-const SignInSchema = require("../schema/sign-in");
 const { pipeline, body, validationHandler } = require("../../common");
+const schema = require("../schema/sign-in");
+const StatusCodes = require("http-status-codes");
 
 
-const signInHandler = async (req, res, next) => {
+const signInHandler = async (req, res) => {
 
-    console.log(req.body);
+    const { accessToken, refreshToken }
+        = await signIn(req.body);
 
-    try {
-        const { accessToken, refreshToken }
-            = await signIn(req.body);
+    res.cookie("REFRESH_TOKEN", refreshToken, {
+        httpOnly: true,
+        maxAge: Number(process.env.JWT_REFRESH_TOKEN_DURATION)
+    });
 
-        res.cookie("REFRESH_TOKEN", refreshToken, {
-                httpOnly: true,
-                maxAge: Number(process.env.JWT_REFRESH_TOKEN_DURATION)*1000
-        });
-
-        res.status(201).send({ accessToken });
-    }
-    catch(error) {
-        next(error);
-    }
-
+    res.status(StatusCodes.CREATED).send({ accessToken });
 }
 
 module.exports = pipeline(
-    validationHandler([body(SignInSchema)]),
+    validationHandler([body(schema)]),
     signInHandler
 );

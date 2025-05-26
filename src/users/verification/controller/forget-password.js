@@ -1,5 +1,5 @@
 const { forgetPassword } = require("../service");
-const { pipeline, validationHandler, body } = require("../../common");
+const { pipeline, validationHandler, body } = require("../../../common");
 const schema = require("../schema/forget-password");
 const StatusCodes = require("http-status-codes");
 

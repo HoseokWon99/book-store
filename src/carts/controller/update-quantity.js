@@ -1,6 +1,5 @@
 const { updateQuantity } = require("../service");
 const { pipeline, validationHandler, body } = require("../../common");
-const AuthGuard = require('../../auth/guard');
 const schema = require("../schema/update-quantity");
 
 const updateQuantityHandler = async (req, res) => {
@@ -11,7 +10,6 @@ const updateQuantityHandler = async (req, res) => {
 };
 
 module.exports = pipeline(
-    ...AuthGuard(["USER", "ADMIN"]),
     validationHandler([body(schema)]),
     updateQuantityHandler
 );

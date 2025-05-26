@@ -1,6 +1,6 @@
 const { pipeline, validationHandler, params } = require("../common");
 const { getCategoryValue } = require("./service");
-const GetCategorySchema = require("./schema/get-category");
+const schema = require("./schema/get-category");
 
 const getCategoryHandler = async (req, res) => {
     const category = await getCategoryValue(Number(req.params.categoryId));
@@ -8,6 +8,6 @@ const getCategoryHandler = async (req, res) => {
 };
 
 exports.getCategory = pipeline(
-    validationHandler([params(GetCategorySchema)]),
+    validationHandler([params(schema)]),
     getCategoryHandler
 );

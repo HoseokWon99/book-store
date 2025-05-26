@@ -1,6 +1,5 @@
 const {  removeItems } = require("../service");
 const { pipeline, validationHandler, body } = require("../../common");
-const AuthGuard = require('../../auth/guard');
 const schema = require("../schema/remove-items");
 
 const removeProductsHandler = async (req, res) => {
@@ -11,7 +10,6 @@ const removeProductsHandler = async (req, res) => {
 };
 
 module.exports = pipeline(
-    ...AuthGuard(["USER", "ADMIN"]),
     validationHandler([body(schema)]),
     removeProductsHandler
 );

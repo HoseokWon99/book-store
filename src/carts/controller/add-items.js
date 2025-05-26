@@ -1,6 +1,5 @@
 const { addItems } = require("../service");
 const { pipeline, validationHandler, body } = require("../../common");
-const AuthGuard = require('../../auth/guard');
 const schema = require("../schema/add-items");
 
 const addProductsHandler = async (req, res) => {
@@ -11,7 +10,6 @@ const addProductsHandler = async (req, res) => {
 };
 
 module.exports = pipeline(
-    ...AuthGuard(["USER", "ADMIN"]),
     validationHandler([body(schema)]),
     addProductsHandler
 );

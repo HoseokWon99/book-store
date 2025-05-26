@@ -1,7 +1,7 @@
 //@ts-check
-const getUserBy = require("./get-user-by");
+const { getUserBy } = require("../../service");
 const { randomUUID } = require("crypto");
-const redis = require("../../config/redis");
+const redis = require("../../../config/redis");
 
 /**
  *

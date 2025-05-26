@@ -9,7 +9,6 @@ const StatusCodes = require("http-status-codes");
  *     id: number;
  *     email: string;
  *     password: string;
- *     role: "USER" | "ADMIN";
  * }} UserInfo
  *
  * @typedef {
@@ -31,8 +30,8 @@ async function getUserBy(dto) {
     const user = await User.findOne({ where });
     if (!user) throw httpError(StatusCodes.UNAUTHORIZED);
 
-    const { id, email, role } = user;
-    return { id, email, role };
+    const { id, email } = user;
+    return { id, email };
 }
 
 module.exports = getUserBy;
