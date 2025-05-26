@@ -1,12 +1,13 @@
 const { getBookBy } = require("../service");
-const schema = require("../schema/get-book")
 const { validationHandler, params, pipeline } = require("../../common");
+const schema = require("../schema/get-book");
+const StatusCodes = require("http-status-codes");
 
 const getBookHandler = async (req, res) => {
     const bookId = BigInt(req.params.bookId);
-    const userId = req.user ? req.user.id : req.user;
+    const userId = req.user && req.user.id;
     const book = await getBookBy({ bookId, userId });
-    res.status(200).send(book);
+    res.status(StatusCodes.OK).send(book);
 };
 
 module.exports = pipeline(

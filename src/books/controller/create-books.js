@@ -1,10 +1,11 @@
 const { createBooks } = require("../service");
-const schema = require("../schema/create-books");
 const { validationHandler, body, pipeline } = require("../../common");
+const schema = require("../schema/create-books");
+const StatusCodes = require("http-status-codes");
 
 const createBooksHandler = async (req, res) => {
     await createBooks(req.body.items);
-    res.sendStatus(201);
+    res.sendStatus(StatusCodes.CREATED);
 };
 
 module.exports = pipeline(

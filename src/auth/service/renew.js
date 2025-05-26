@@ -1,17 +1,15 @@
-const { createToken } = require("../../config/jwt");
-
-/**
- * @typedef {{ id: number; email: string; }} UserDTO
- */
+const { createToken, verifyToken } = require("../../config/jwt");
 
 /**
  *
- * @param {UserDTO} dto
- * @returns {string}
+ * @param {string} refreshToken
+ * @returns {Promise<string>}
  */
-function renew(dto) {
+async function renew(refreshToken) {
+    const { id, email } = verifyToken(refreshToken);
+
     return createToken({
-        ...dto,
+        id, email,
         exp: Number(process.env.JWT_ACCESS_TOKEN_DURATION)
     });
 }

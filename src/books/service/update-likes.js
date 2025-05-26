@@ -29,8 +29,6 @@ async function updateLikes(dto) {
         { autocommit: true },
         async transaction => {
 
-
-
             if (bookFan) {
                 await bookFan.destroy({ transaction });
                 await bookLike.decrement("likes", { transaction });
@@ -39,6 +37,7 @@ async function updateLikes(dto) {
                 await BookFan.create(dto, { transaction });
                 await bookLike.increment("likes", { transaction });
             }
+
         }
     );
 

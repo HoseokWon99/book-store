@@ -2,16 +2,12 @@ const { searchBooksBy } = require("../service");
 const { pipeline, validationHandler, query, queryParser } = require("../../common");
 const schema = require("../schema/search-books");
 const parseQuery = queryParser(schema);
+const StatusCodes = require("http-status-codes");
 
 const searchBooksHandler = async (req, res) => {
-    const data = parseQuery(req.query);
-
-    Object.entries(data)
-        .forEach(([key, value]) => {
-            console.debug(`${key}: ${value} ${typeof value}`);
-        })
-
-    res.status(200).send(await searchBooksBy(data));
+    const query = parseQuery(req.query);
+    const data = await searchBooksBy(query);
+    res.status(StatusCodes.OK).send(data);
 };
 
 module.exports = pipeline(
